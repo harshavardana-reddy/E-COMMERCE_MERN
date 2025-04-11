@@ -111,28 +111,27 @@ pipeline {
     }
 
     post {
-        always {
-            // Clean up Docker credentials
-            bat 'docker logout'
-            
-            // Clean workspace
-            cleanWs()
-        }
-        success {
-            // Send success notification
-            echo 'Pipeline completed successfully!'
-            slackSend(
-                color: 'good',
-                message: "Build #${env.BUILD_NUMBER} succeeded: ${env.BUILD_URL}"
-            )
-        }
-        failure {
-            // Send failure notification
-            echo 'Pipeline failed!'
-            slackSend(
-                color: 'danger',
-                message: "Build #${env.BUILD_NUMBER} failed: ${env.BUILD_URL}"
-            )
-        }
+    always {
+        bat 'docker logout'
+        cleanWs()
     }
+    success {
+        echo 'Pipeline completed successfully!'
+        // Alternative: Send email
+        emailext (
+            subject: "SUCCESS: Pipeline '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
+            body: "Build URL: ${env.BUILD_URL}",
+            to: 'your-email@example.com'
+        )
+    }
+    failure {
+        echo 'Pipeline failed!'
+        // Alternative: Send email
+        emailext (
+            subject: "FAILED: Pipeline '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
+            body: "Build URL: ${env.BUILD_URL}",
+            to: 'your-email@example.com'
+        )
+    }
+}
 }
