@@ -21,7 +21,11 @@ pipeline {
     }
 
     stages {
-
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/harshavardana-reddy/E-COMMERCE_MERN.git'
+            }
+        }
         stage('Install Dependencies') {
             parallel {
                 stage('Frontend Dependencies') {
