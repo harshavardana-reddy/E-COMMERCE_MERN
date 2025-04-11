@@ -49,7 +49,7 @@ pipeline {
             parallel {
                 stage('Build Frontend') {
                     steps {
-                        dir('client') {
+                        dir('frontendapp') {
                             bat 'npm run build'
                         }
                     }
