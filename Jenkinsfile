@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         // Docker Hub credentials
+        NODE_VERSION = '18' // Use Node.js 18 for both build and runtime
         DOCKER_HUB_CREDENTIALS = credentials('JENKINS-DOCKERHUB')
         
         // Image names and tags
