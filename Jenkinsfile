@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Docker Hub credentials
         NODE_VERSION = '18' // Use Node.js 18 for both build and runtime
-        DOCKER_HUB_CREDENTIALS = credentials('JENKINS-DOCKERHUB')
+        DOCKER_HUB_CREDENTIALS = credentials('Jenkins-Docker')
         
         // Image names and tags
         BACKEND_IMAGE_NAME = 'harshareddy2024/ecom-backend'
@@ -117,21 +117,9 @@ pipeline {
     }
     success {
         echo 'Pipeline completed successfully!'
-        // Alternative: Send email
-        emailext (
-            subject: "SUCCESS: Pipeline '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
-            body: "Build URL: ${env.BUILD_URL}",
-            to: '2200030963@kluniversity.in'
-        )
     }
     failure {
         echo 'Pipeline failed!'
-        // Alternative: Send email
-        emailext (
-            subject: "FAILED: Pipeline '${env.JOB_NAME}' (${env.BUILD_NUMBER})",
-            body: "Build URL: ${env.BUILD_URL}",
-            to: '2200030963@kluniversity.in'
-        )
     }
 }
 }
