@@ -18,7 +18,7 @@ const MONGO_URI = process.env.DB_URI_ATLAS;
 
 mongoose.connect(MONGO_URI)
 .then(() => console.log('\x1b[32mDatabase connected Successfully'))
-.catch(err => console.error('\x1b[31mMongoDB connection error: ', err+message));
+.catch(err => console.error('\x1b[31mMongoDB connection error: ', err.message));
 
 app.get('/',async(req,res)=>{
     res.send('Welcome to the E-commerce API');
