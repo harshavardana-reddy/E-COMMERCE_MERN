@@ -23,8 +23,10 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/harshavardana-reddy/E-COMMERCE_MERN.git'
+                steps {
+                    git credentialsId: 'Jenkins-Git',
+                    url: 'https://github.com/harshavardana-reddy/E-COMMERCE_MERN.git',
+                    branch: 'main'
             }
         }
         stage('Install Dependencies') {
