@@ -2,31 +2,28 @@ pipeline {
     agent any
 
     environment {
-        // Docker Hub credentials
-        NODE_VERSION = '18' // Use Node.js 18 for both build and runtime
+        
+        NODE_VERSION = '18' 
         DOCKER_HUB_CREDENTIALS = credentials('Jenkins-Docker')
         
-        // Image names and tags
         BACKEND_IMAGE_NAME = 'harshareddy2024/ecom-backend'
         FRONTEND_IMAGE_NAME = 'harshareddy2024/ecom-frontend'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         
-        // Environment variables for backend
+        
         
         DB_URI_ATLAS = credentials('DB_URI_ATLAS_ECOM')
         RAZORPAY_KEY_ID = credentials('RAZORPAY_KEY_ID')
         RAZORPAY_KEY_SECRET = credentials('RAZORPAY_KEY_SECRET')
         
-        // Environment variable for frontend
+        
         VITE_APP_RAZORPAY_KEY = credentials('VITE_APP_RAZORPAY_KEY')
     }
 
     stages {
         stage('Checkout') {
-                steps {
-                    git credentialsId: 'Jenkins-Git',
-                    url: 'https://github.com/harshavardana-reddy/E-COMMERCE_MERN.git',
-                    branch: 'main'
+            steps {
+                git branch: 'main', url: 'https://github.com/harshavardana-reddy/E-COMMERCE_MERN.git'
             }
         }
         stage('Install Dependencies') {
@@ -74,7 +71,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'JENKINS-DOCKERHUB', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'Jenkins-Docker', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
                     bat "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                 }
             }
@@ -83,7 +80,7 @@ pipeline {
         stage('Push Docker Images') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'JENKINS-DOCKERHUB') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'Jenkins-Docker') {
                         // Push frontend image
                         docker.image("${FRONTEND_IMAGE_NAME}:${IMAGE_TAG}").push()
                         
