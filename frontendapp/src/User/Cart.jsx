@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { FiShoppingCart, FiTrash2, FiPlus, FiMinus, FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
+import { userApi } from '../Api';
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Cart() {
   const fetchCartItems = async (userId) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${BackendURL.User}/fetchcart/${userId}`);
+      const response = await userApi.get(`${BackendURL.User}/fetchcart/${userId}`);
       if (response.data.cart && response.data.cart.items) {
         setCartItems(response.data.cart.items);
         // console.log('Cart items:', cartItems);
@@ -46,7 +46,7 @@ export default function Cart() {
 
     setIsUpdating(true);
     try {
-      await axios.put(`${BackendURL.User}/updatecart/${user.userId}/${productId}`, {
+      await userApi.put(`${BackendURL.User}/updatecart/${user.userId}/${productId}`, {
         quantity: newQuantity
       });
       
@@ -67,7 +67,7 @@ export default function Cart() {
 
     setIsUpdating(true);
     try {
-      await axios.delete(`${BackendURL.User}/deletecartitem/${user.userId}/${productId}`);
+      await userApi.delete(`${BackendURL.User}/deletecartitem/${user.userId}/${productId}`);
       
       // Optimistically update the UI
       setCartItems(cartItems.filter(item => item.productId !== productId));

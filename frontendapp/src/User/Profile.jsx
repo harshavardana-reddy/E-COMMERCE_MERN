@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiEdit2, FiSave, FiLock, FiMail, FiPhone, FiMapPin, FiUser, FiEyeOff, FiEye, FiX } from "react-icons/fi";
 import { Tooltip } from "react-tooltip";
-import axios from "axios";
 import BackendURL from "../BackendURL";
 import { toast, ToastContainer } from "react-toastify";
+import { userApi } from '../Api';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -78,7 +78,7 @@ export default function Profile() {
     const form = { ...user, ...formData, userImage: imagePreview };
     console.log(form)
     try {
-      const response = await axios.put(`${BackendURL.User}/updateprofile/${userData.userId}`,form)
+      const response = await userApi.put(`${BackendURL.User}/updateprofile/${userData.userId}`,form)
       console.log(response)
       const updatedUser = { ...userData, ...response.data.user };
       localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -108,7 +108,7 @@ export default function Profile() {
     const userData = JSON.parse(localStorage.getItem("user"));
     
     try {
-      const response = await axios.put(
+      const response = await userApi.put(
         `${BackendURL.User}/updatepassword/${userData.userId}`,
         {
           oldPassword: passwordData.oldPassword,

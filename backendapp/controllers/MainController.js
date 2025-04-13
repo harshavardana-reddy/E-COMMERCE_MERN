@@ -1,6 +1,7 @@
 const adminModel = require("../models/Admin");
 const sellerModel = require("../models/Seller");
 const userModel = require("../models/User");
+const { generateToken } = require("../utils/jwt/Auth");
 
 const checkLogin = async (req, res) => {
     const { username, password } = req.body;
@@ -15,13 +16,17 @@ const checkLogin = async (req, res) => {
     try {
         // Check admin
         const admin = await adminModel.findOne({ username,password }, { _id:0,password: 0 });
+        
         // console.log("Admin data:", admin);
         if (admin) {
+            const username = admin.username;
+            const token = await generateToken({ username,role:"admin" });
             return res.status(200).json({
                 success: true,
                 message: "Admin login successful",
                 role: "admin",
                 data: admin,
+                token:token
             });
         }
 
@@ -32,11 +37,14 @@ const checkLogin = async (req, res) => {
         }, { _id:0,password: 0 });
         
         if (seller) {
+            const id = seller.sellerId;
+            const token = await generateToken({id,role:"seller"});
             return res.status(200).json({
                 success: true,
                 message: "Seller login successful",
                 role: "seller",
                 data: seller,
+                token:token
             });
         }
 
@@ -47,11 +55,14 @@ const checkLogin = async (req, res) => {
         }, { _id:0,password: 0 });
         
         if (user) {
+            const id = user.userId;
+            const token = await generateToken({id,role:"user"});
             return res.status(200).json({
                 success: true,
                 message: "User login successful",
                 role: "user",
                 data: user,
+                token:token
             });
         }
 

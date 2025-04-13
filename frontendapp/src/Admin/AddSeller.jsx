@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import BackendURL from '../BackendURL';
+import { adminApi } from "../Api";
 
 export default function AddSeller() {
   const [formData, setFormData] = useState({
@@ -32,8 +32,8 @@ export default function AddSeller() {
     
     try {
       // Here you would typically make an API call to your backend
-      // await axios.post('/api/sellers', formData);
-      const response = await axios.post(`${BackendURL.Admin}/addseller`,formData)
+      // await adminApi.post('/api/sellers', formData);
+      const response = await adminApi.post(`${BackendURL.Admin}/addseller`,formData)
       // Simulate API call
       if(response.status === 201){
         toast.success('Seller added successfully!');

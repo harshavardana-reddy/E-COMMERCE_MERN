@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { adminApi } from "../Api";
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -15,7 +16,6 @@ import {
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { FiTrendingUp, FiUsers, FiShoppingBag, FiDollarSign } from "react-icons/fi";
-import axios from "axios";
 import BackendURL from "../BackendURL"
 
 // Register ChartJS components
@@ -33,7 +33,7 @@ ChartJS.register(
 
 const getDashboardStats = async () => {
   try {
-    const response = await axios.get(`${BackendURL.Admin}/dashboard`)
+    const response = await adminApi.get(`${BackendURL.Admin}/dashboard`)
     return response.data.data;
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);

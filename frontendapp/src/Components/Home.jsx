@@ -95,7 +95,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
@@ -123,10 +123,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Product Preview Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Featured Products</h2>
@@ -136,7 +136,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Product Card 1 */}
+            
             <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative pt-[100%] bg-gray-100 dark:bg-gray-600">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -164,8 +164,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
-            {/* Product Card 2 */}
+        
             <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative pt-[100%] bg-gray-100 dark:bg-gray-600">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -197,7 +196,7 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Product Card 3 */}
+ 
             <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative pt-[100%] bg-gray-100 dark:bg-gray-600">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -236,7 +235,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

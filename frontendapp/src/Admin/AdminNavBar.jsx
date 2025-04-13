@@ -18,6 +18,7 @@ import AdminHome from "./AdminHome";
 import AddSeller from "./AddSeller";
 import ViewSellers from "./ViewSellers";
 import ViewProduct from "./ViewProduct";
+// import { adminApi } from "../Api";
 import ViewUsers from "./ViewUsers";
 import logo from "../assets/logo.png";
 
@@ -30,6 +31,7 @@ export default function AdminNavBar() {
   const handleLogout = () => {
     localStorage.removeItem("admin");
     localStorage.removeItem("adminLoggedIn");
+    localStorage.removeItem("adminToken");
     navigate("/login");
     window.location.reload();
   };

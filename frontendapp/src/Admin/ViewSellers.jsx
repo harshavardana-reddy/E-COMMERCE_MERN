@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FiSearch, FiEdit2, FiTrash2, FiEye, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import { toast, ToastContainer } from "react-toastify";
 import BackendURL from '../BackendURL';
+import { adminApi } from "../Api";
 
 export default function ViewSellers() {
   const [sellers, setSellers] = useState([]);
@@ -29,7 +29,7 @@ export default function ViewSellers() {
     const fetchSellers = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${BackendURL.Admin}/getsellers`);
+        const response = await adminApi.get(`${BackendURL.Admin}/getsellers`);
         setSellers(response.data.data);
       } catch (error) {
         toast.error('Failed to fetch sellers');
@@ -61,7 +61,7 @@ export default function ViewSellers() {
   const handleDelete = async (sellerId) => {
     if (window.confirm('Are you sure you want to delete this seller?')) {
       try {
-        await axios.delete(`${BackendURL.Admin}/deleteseller/${sellerId}`);
+        await adminApi.delete(`${BackendURL.Admin}/deleteseller/${sellerId}`);
         setSellers(sellers.filter(seller => seller.sellerId !== sellerId));
         toast.success('Seller deleted successfully');
       } catch (error) {
@@ -94,7 +94,7 @@ export default function ViewSellers() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
+      const response = await adminApi.put(
         `${BackendURL.Admin}/updateseller/${editFormData.sellerId}`,
         editFormData
       );

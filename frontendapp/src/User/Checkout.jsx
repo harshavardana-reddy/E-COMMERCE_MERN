@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
-import { FiShoppingCart, FiChevronLeft, FiCheckCircle, FiLoader, FiAlertCircle } from 'react-icons/fi';
+import {  FiChevronLeft, FiCheckCircle, FiLoader } from 'react-icons/fi';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
 import { toast, ToastContainer } from 'react-toastify';
 import logo from "../assets/logo.png"
+import { userApi } from '../Api';
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function Checkout() {
 
   const fetchCartItems = async (userId) => {
     try {
-      const response = await axios.get(`${BackendURL.User}/fetchcart/${userId}`);
+      const response = await userApi.get(`${BackendURL.User}/fetchcart/${userId}`);
       if (response.data.cart && response.data.cart.items) {
         setCartItems(response.data.cart.items);
         console.log(cartItems)
@@ -95,7 +95,7 @@ export default function Checkout() {
   
     try {
       // Create order on backend
-      const orderResponse = await axios.post(`${BackendURL.User}/makepayment`, {
+      const orderResponse = await userApi.post(`${BackendURL.User}/makepayment`, {
         userId: user.userId,
         products: cartItems.map(item => ({
           productId: item.productId,
@@ -126,7 +126,7 @@ export default function Checkout() {
               throw new Error("Incomplete Razorpay response");
             }
   
-            const verifyResponse = await axios.post(`${BackendURL.User}/verifyorder`, {
+            const verifyResponse = await userApi.post(`${BackendURL.User}/verifyorder`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -138,7 +138,7 @@ export default function Checkout() {
               setOrderId(dbOrder.orderId);
               // Clear cart if needed
               if (location.pathname === '/checkout') {
-                await axios.delete(`${BackendURL.User}/clearcart/${user.userId}`);
+                await userApi.delete(`${BackendURL.User}/clearcart/${user.userId}`);
               }
             } else {
               toast.error(verifyResponse.data.message || 'Payment verification failed');
@@ -166,7 +166,7 @@ export default function Checkout() {
       rzp.on('payment.failed', function(response) {
         console.error("Payment failed:", response.error);
         // Notify backend about failed payment
-        axios.post(`${BackendURL.User}/paymentfailed`, {
+        userApi.post(`${BackendURL.User}/paymentfailed`, {
           razorpay_order_id: response.error.metadata.order_id,
           error: response.error
         });

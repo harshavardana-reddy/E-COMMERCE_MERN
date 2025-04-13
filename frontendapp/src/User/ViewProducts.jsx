@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react';
 import { FiSearch, FiEye, FiStar, FiFilter, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
 import { useNavigate } from 'react-router-dom';
+import { userApi } from '../Api';
 
 // Constants
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home Appliances', 'Books'];
@@ -46,7 +46,7 @@ export default function ViewProduct() {
   const fetchProducts = async () => {
     updateState({ isLoading: true });
     try {
-      const response = await axios.get(`${BackendURL.Admin}/getproducts`);
+      const response = await userApi.get(`${BackendURL.User}/getproducts`);
       const products = response.data.data;
       
       // Create a unique set of seller IDs
@@ -54,8 +54,8 @@ export default function ViewProduct() {
       
       // Fetch all seller names in parallel
       const sellerNamePromises = sellerIds.map(id => 
-        axios.get(`${BackendURL.Admin}/getseller/${id}`)
-          .then(res => ({ id, name: res.data.data.sellerName }))
+        userApi.get(`${BackendURL.User}/getseller/${id}`)
+          .then(res => ({ id, name: res.data.seller.sellerName }))
           .catch(() => ({ id, name: 'Unknown Seller' }))
       );
       

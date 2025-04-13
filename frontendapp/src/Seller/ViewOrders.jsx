@@ -12,9 +12,9 @@ import {
   FiSearch,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import BackendURL from "../BackendURL";
+import { sellerApi } from "../Api";
 
 const statusColors = {
   Pending: "bg-yellow-100 text-yellow-800",
@@ -49,7 +49,7 @@ export default function ViewOrders() {
     const fetchOrders = async () => {
       try {
         const seller = JSON.parse(localStorage.getItem("seller"));
-        const response = await axios.get(
+        const response = await sellerApi.get(
           `${BackendURL.Seller}/fetchorders/${seller.sellerId}`
         );
         setOrders(response.data.data);
@@ -100,7 +100,7 @@ export default function ViewOrders() {
         ...(newStatus === "Shipped" && logisticDetails),
       };
   
-      await axios.patch(`${BackendURL.Seller}/updatestatus`, payload);
+      await sellerApi.patch(`${BackendURL.Seller}/updatestatus`, payload);
   
       toast.success(`Order status updated to ${newStatus}`);
       window.location.reload(); // Refresh immediately after success
@@ -113,7 +113,7 @@ export default function ViewOrders() {
   };
   const fetchLogisticDetails = async (orderId) => {
     try {
-        const response = await axios.get(`${BackendURL.Seller}/logistics/${orderId}`);
+        const response = await sellerApi.get(`${BackendURL.Seller}/logistics/${orderId}`);
         // console.log(response.data.logisticDetails)
         return response.data.logisticDetails;
     } catch (error) {

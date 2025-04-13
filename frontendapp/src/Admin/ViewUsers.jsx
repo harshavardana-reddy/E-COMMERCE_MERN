@@ -5,6 +5,7 @@ import axios from 'axios';
 import BackendURL from '../BackendURL';
 import { toast, ToastContainer } from 'react-toastify';
 import * as XLSX from 'xlsx';
+import { adminApi } from "../Api";
 
 export default function ViewUsers() {
   const [users, setUsers] = useState([]);
@@ -21,7 +22,7 @@ export default function ViewUsers() {
     const fetchUsers = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${BackendURL.Admin}/getusers`);
+        const response = await adminApi.get(`${BackendURL.Admin}/getusers`);
         setUsers(response.data.data);
         setFilteredUsers(response.data.data);
       } catch (error) {
@@ -78,7 +79,7 @@ export default function ViewUsers() {
   const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`${BackendURL.Admin}/deleteuser/${userId}`);
+        await adminApi.delete(`${BackendURL.Admin}/deleteuser/${userId}`);
         setUsers(users.filter(user => user.userId !== userId));
         toast.success('User deleted successfully');
       } catch (error) {

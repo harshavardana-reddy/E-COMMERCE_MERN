@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEye, FiEyeOff, FiCheckCircle, FiAlertCircle, FiLock, FiUser } from "react-icons/fi";
 import { toast,ToastContainer } from "react-toastify";
-import axios from "axios";
 import BackendURL from "../BackendURL";
+import { sellerApi } from "../Api";
 
 export default function Profile() {
   const [seller, setSeller] = useState({});
@@ -47,7 +47,7 @@ export default function Profile() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      const response = await axios.put(`${BackendURL.Seller}/updatepassword/${seller.sellerId}`,{ oldPassword:currentPassword,newPassword:newPassword })
+      const response = await sellerApi.put(`${BackendURL.Seller}/updatepassword/${seller.sellerId}`,{ oldPassword:currentPassword,newPassword:newPassword })
       if(response.data.success){
         toast.success("Password updated successfully!");
         setCurrentPassword("");

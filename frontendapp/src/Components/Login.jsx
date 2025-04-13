@@ -31,7 +31,7 @@ export default function Login({ onAdminLogin, onUserLogin, onSellerLogin }) {
     }));
   };
 
-  const handleLoginSuccess = (role, data) => {
+  const handleLoginSuccess = (role, data, token) => {
     const roleCallbacks = {
       [ROLES.ADMIN]: onAdminLogin,
       [ROLES.SELLER]: onSellerLogin,
@@ -40,6 +40,7 @@ export default function Login({ onAdminLogin, onUserLogin, onSellerLogin }) {
     
     roleCallbacks[role]();
     localStorage.setItem(role, JSON.stringify(data));
+    localStorage.setItem(`${role}Token`,token);
     toast.success(`${role.charAt(0).toUpperCase() + role.slice(1)} logged in successfully`);
     
     // Navigate based on role
@@ -66,7 +67,7 @@ export default function Login({ onAdminLogin, onUserLogin, onSellerLogin }) {
       const { username, password } = formData;
       const response = await axios.post(`${BackendURL.Main}/login`, { username, password });
       if (response.status === 200) {
-        handleLoginSuccess(response.data.role, response.data.data);
+        handleLoginSuccess(response.data.role, response.data.data,response.data.token);
       } else {
         toast.error("Invalid Credentials");
       }

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { FiShoppingCart, FiShare2, FiChevronLeft, FiHeart } from 'react-icons/fi';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
 import { toast, ToastContainer } from 'react-toastify';
+import { userApi } from '../Api';
 
 export default function Product() {
   const { id } = useParams();
@@ -15,7 +15,7 @@ export default function Product() {
   const [error, setError] = useState(null);
   const [sellerInfo, setSellerInfo] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
+  // const [selectedImage, setSelectedImage] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -24,11 +24,11 @@ export default function Product() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const productResponse = await axios.get(`${BackendURL.User}/getProduct/${productId}`);
+        const productResponse = await userApi.get(`${BackendURL.User}/getProduct/${productId}`);
         setProduct(productResponse.data.product);
         
         if (productResponse.data.product.sellerId) {
-          const sellerResponse = await axios.get(`${BackendURL.User}/getSeller/${productResponse.data.product.sellerId}`);
+          const sellerResponse = await userApi.get(`${BackendURL.User}/getSeller/${productResponse.data.product.sellerId}`);
           setSellerInfo(sellerResponse.data.seller);
         }
         
@@ -62,7 +62,7 @@ export default function Product() {
         return;
       }
 
-      const response = await axios.post(`${BackendURL.User}/addtocart/${user.userId}`, {
+      const response = await userApi.post(`${BackendURL.User}/addtocart/${user.userId}`, {
         productId: product.productId,
         quantity: quantity
       });

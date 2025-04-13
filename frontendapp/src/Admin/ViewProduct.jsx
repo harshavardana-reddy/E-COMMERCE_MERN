@@ -4,6 +4,7 @@ import { FiSearch, FiEye, FiStar, FiFilter, FiChevronLeft, FiChevronRight } from
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import BackendURL from '../BackendURL';
+import { adminApi } from "../Api";
 
 // Constants
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home Appliances', 'Books'];
@@ -44,7 +45,7 @@ export default function ViewProduct() {
   const fetchProducts = async () => {
     updateState({ isLoading: true });
     try {
-      const response = await axios.get(`${BackendURL.Admin}/getproducts`);
+      const response = await adminApi.get(`${BackendURL.Admin}/getproducts`);
       const products = response.data.data;
       
       // Create a unique set of seller IDs
@@ -52,7 +53,7 @@ export default function ViewProduct() {
       
       // Fetch all seller names in parallel
       const sellerNamePromises = sellerIds.map(id => 
-        axios.get(`${BackendURL.Admin}/getseller/${id}`)
+        adminApi.get(`${BackendURL.Admin}/getseller/${id}`)
           .then(res => ({ id, name: res.data.data.sellerName }))
           .catch(() => ({ id, name: 'Unknown Seller' }))
       );
@@ -78,7 +79,7 @@ export default function ViewProduct() {
 
   const getSellerName = async(sellerId) => {
     try {
-      const response = await axios.get(`${BackendURL.Admin}/getseller/${sellerId}`);
+      const response = await adminApi.get(`${BackendURL.Admin}/getseller/${sellerId}`);
       return response.data.data.sellerName;
     } catch (error) {
       console.error('Error fetching seller name:', error);

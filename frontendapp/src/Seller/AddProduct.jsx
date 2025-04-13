@@ -2,8 +2,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload, FiX } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
+import { sellerApi } from "../Api";
 
 const categories = ['Electronics', 'Fashion', 'Home Appliances', 'Books'];
 
@@ -103,7 +103,7 @@ export default function AddProduct() {
         sellerId:sellerId // Replace with actual seller ID from auth/session
       };
 
-      const response = await axios.post(`${BackendURL.Seller}/addproduct`, productData);
+      const response = await sellerApi.post(`${BackendURL.Seller}/addproduct`, productData);
       
       if (response.data.success) {
         toast.success('Product added successfully');

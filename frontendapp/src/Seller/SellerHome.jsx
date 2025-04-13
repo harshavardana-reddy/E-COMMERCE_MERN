@@ -13,8 +13,8 @@ import { Bar, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { toast } from "react-toastify";
-import axios from "axios";
 import BackendURL from "../BackendURL";
+import { sellerApi } from "../Api";
 
 // Register ChartJS components
 ChartJS.register(
@@ -60,7 +60,7 @@ export default function SellerHome() {
           throw new Error("Seller information not found");
         }
 
-        const response = await axios.get(`${BackendURL.Seller}/dashboard/${seller.sellerId}`);
+        const response = await sellerApi.get(`${BackendURL.Seller}/dashboard/${seller.sellerId}`);
         
         if (response.data.success) {
           setDashboardData(response.data.data);

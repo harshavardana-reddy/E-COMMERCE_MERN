@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { FiSearch, FiEye, FiStar, FiFilter, FiChevronLeft, FiChevronRight, FiEdit, FiX } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
 import BackendURL from '../BackendURL';
+import { sellerApi } from "../Api";
 
 // Constants
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home Appliances', 'Books'];
@@ -76,7 +76,7 @@ export default function ViewProducts() {
     // console.log('seller', state.seller); // Now this should show the proper seller data
     updateState({ isLoading: true });
     try {
-      const response = await axios.get(
+      const response = await sellerApi.get(
         `${BackendURL.Seller}/getproducts/${state.seller.sellerId}`
       );
       updateState({
@@ -197,7 +197,7 @@ export default function ViewProducts() {
     
     try {
       updateState({ isUpdating: true });
-      const response = await axios.put(
+      const response = await sellerApi.put(
         `${BackendURL.Seller}/updateproduct/${selectedProduct.productId}`,
         {
           productDescription: editFormData.productDescription,

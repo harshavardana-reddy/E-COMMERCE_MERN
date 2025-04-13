@@ -23,6 +23,7 @@ import logo from "../assets/logo.png";
 import Product from "./Product";
 import Checkout from "./Checkout";
 
+
 export default function UserNavBar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

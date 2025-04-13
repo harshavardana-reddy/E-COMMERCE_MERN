@@ -926,18 +926,18 @@ const updateProfile = async (req, res) => {
       }
 
       // List of allowed fields to update
-      const allowedUpdates = [
-          'userName',
-          'userEmail',
-          'userPhone',
-          'userGender',
-          'userAddress',
-          'userCity',
-          'userState',
-          'userCountry',
-          'password',
-          'userImage'
-      ];
+      // const allowedUpdates = [
+      //     'userName',
+      //     'userEmail',
+      //     'userPhone',
+      //     'userGender',
+      //     'userAddress',
+      //     'userCity',
+      //     'userState',
+      //     'userCountry',
+      //     'password',
+      //     'userImage'
+      // ];
       // console.log(req.body)
       // Check if any invalid field is being updated
       // const isValidOperation = Object.keys(updates).every(update => 

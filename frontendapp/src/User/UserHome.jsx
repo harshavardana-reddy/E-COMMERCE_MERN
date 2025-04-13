@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { FiShoppingBag, FiPackage, FiTruck, FiCreditCard, FiStar, FiTrendingUp } from "react-icons/fi";
 import { Bar, Pie } from "react-chartjs-2";
@@ -12,10 +13,10 @@ import {
   ArcElement
 } from 'chart.js';
 import ProductCard from "./ProductCard";
-import axios from "axios";
 import BackendURL from "../BackendURL";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { userApi } from '../Api';
 
 ChartJS.register(
   CategoryScale,
@@ -38,7 +39,7 @@ export default function UserHome() {
         // In a real app, you would get userId from auth context
         const user = JSON.parse(localStorage.getItem("user"));
         setUser(user)
-        const response = await axios.get(`${BackendURL.User}/dashboard/${user.userId}`);
+        const response = await userApi.get(`${BackendURL.User}/dashboard/${user.userId}`);
         setDashboardData(response.data);
         setLoading(false);
       } catch (error) {
@@ -94,7 +95,7 @@ export default function UserHome() {
   const handleAddToCart = async (productId) => {
     try {
       const userId = JSON.parse(localStorage.getItem("user")).userId;
-      const response = await axios.post(`${BackendURL.User}/addtocart/${userId}`, { productId, quantity: 1 });
+      const response = await userApi.post(`${BackendURL.User}/addtocart/${userId}`, { productId, quantity: 1 });
       // Show success notification or update cart count
       if (response.data.success) {
               toast.success(`added to cart!`);

@@ -15,8 +15,8 @@ import {
 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import moment from "moment";
-import axios from "axios";
 import BackendURL from "../BackendURL";
+import { userApi } from '../Api';
 
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -38,7 +38,7 @@ export default function MyOrders() {
           throw new Error("User ID not found. Please log in again.");
         }
         
-        const response = await axios.get(`${BackendURL.User}/fetchorders/${user.userId}`);
+        const response = await userApi.get(`${BackendURL.User}/fetchorders/${user.userId}`);
         setOrders(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -54,7 +54,7 @@ export default function MyOrders() {
   const fetchLogisticDetails = async (orderId) => {
     setLoadingLogistics(true);
     try {
-      const response = await axios.get(`${BackendURL.User}/logistics/${orderId}`);
+      const response = await userApi.get(`${BackendURL.User}/logistics/${orderId}`);
       setLogisticDetails(response.data.logisticDetails);
     } catch (err) {
       console.error("Error fetching logistic details:", err);
