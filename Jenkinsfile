@@ -148,7 +148,6 @@ pipeline {
                             background: ${currentBuild.currentResult == 'SUCCESS' ? 
                                         'linear-gradient(135deg, #4CAF50, #2E7D32)' : 
                                         'linear-gradient(135deg, #F44336, #C62828)'};
-                            color: white;
                             padding: 25px;
                             text-align: center;
                         }
