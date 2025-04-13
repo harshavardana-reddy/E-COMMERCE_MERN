@@ -223,7 +223,7 @@ pipeline {
                 emailext (
                     subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: emailContent,
-                    to: 'recipient@example.com',
+                    to: '2200030963@kluniversity.in',
                     mimeType: 'text/html'
                 )
             }
