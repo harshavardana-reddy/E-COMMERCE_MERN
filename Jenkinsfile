@@ -11,7 +11,7 @@ pipeline {
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         
         
-        
+        JWT_SECRET_KEY = credentials('JWT_SECRET_KEY_ECOM')
         DB_URI_ATLAS = credentials('DB_URI_ATLAS_ECOM')
         RAZORPAY_KEY_ID = credentials('RAZORPAY_KEY_ID')
         RAZORPAY_KEY_SECRET = credentials('RAZORPAY_KEY_SECRET')
