@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '18' 
+        NODE_VERSION = '18'
         DOCKER_HUB_CREDENTIALS = credentials('Jenkins-Docker')
         
         BACKEND_IMAGE_NAME = 'harshareddy2024/ecom-backend'
@@ -261,7 +261,7 @@ pipeline {
                 emailext (
                     subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: emailContent,
-                    to: ${EMAIL_RECIPIENTS},
+                    to: "${EMAIL_RECIPIENTS}",
                     mimeType: 'text/html'
                 )
             }
