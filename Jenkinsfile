@@ -15,6 +15,8 @@ pipeline {
         RAZORPAY_KEY_SECRET = credentials('RAZORPAY_KEY_SECRET')
         
         VITE_APP_RAZORPAY_KEY = credentials('VITE_APP_RAZORPAY_KEY')
+
+        EMAIL_RECIPIENTS = "harshapattiputtoor@gmail.com,2200030963@gmail.com,pattiputtoor20050320@gmail.com"
     }
 
     stages {
@@ -134,7 +136,7 @@ pipeline {
                             max-width: 800px;
                             margin: 0 auto;
                             padding: 20px;
-                            background-color: #f9f9f9;
+                            background-color: ${currentBuild.currentResult == 'SUCCESS' ? '#f0f9eb' : '#fef0f0'};
                         }
                         .container {
                             background-color: white;
@@ -143,7 +145,9 @@ pipeline {
                             overflow: hidden;
                         }
                         .header {
-                            background: linear-gradient(135deg, #6e8efb, #a777e3);
+                            background: ${currentBuild.currentResult == 'SUCCESS' ? 
+                                        'linear-gradient(135deg, #4CAF50, #2E7D32)' : 
+                                        'linear-gradient(135deg, #F44336, #C62828)'};
                             color: white;
                             padding: 25px;
                             text-align: center;
@@ -155,8 +159,12 @@ pipeline {
                             border-radius: 6px;
                             padding: 15px;
                             margin-bottom: 20px;
-                            background-color: ${statusColor}20;
+                            background-color: ${currentBuild.currentResult == 'SUCCESS' ? '#e8f5e9' : '#ffebee'};
                             border-left: 5px solid ${statusColor};
+                            color: ${currentBuild.currentResult == 'SUCCESS' ? '#2e7d32' : '#c62828'};
+                        }
+                        .status-card h2 {
+                            margin-top: 0;
                         }
                         .details {
                             margin-top: 20px;
@@ -175,11 +183,31 @@ pipeline {
                         .button {
                             display: inline-block;
                             padding: 10px 20px;
-                            background: linear-gradient(135deg, #6e8efb, #a777e3);
+                            background: ${currentBuild.currentResult == 'SUCCESS' ? 
+                                        'linear-gradient(135deg, #4CAF50, #2E7D32)' : 
+                                        'linear-gradient(135deg, #F44336, #C62828)'};
                             color: white;
                             text-decoration: none;
                             border-radius: 4px;
                             margin-top: 15px;
+                            transition: all 0.3s ease;
+                            font-weight: bold;
+                        }
+                        .button:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+                        .footer {
+                            background-color: ${currentBuild.currentResult == 'SUCCESS' ? '#e8f5e9' : '#ffebee'};
+                            padding: 15px;
+                            text-align: center;
+                            font-size: 0.9em;
+                            color: ${currentBuild.currentResult == 'SUCCESS' ? '#2e7d32' : '#c62828'};
+                            border-top: 1px solid ${currentBuild.currentResult == 'SUCCESS' ? '#c8e6c9' : '#ffcdd2'};
+                        }
+                        a {
+                            color: ${statusColor};
+                            font-weight: bold;
                         }
                     </style>
                 </head>
@@ -187,10 +215,12 @@ pipeline {
                     <div class="container">
                         <div class="header">
                             <h1>E-Commerce Deployment Notification</h1>
+                            <p>${currentBuild.currentResult == 'SUCCESS' ? 'Your deployment was successful!' : 'Deployment failed - attention required!'}</p>
                         </div>
+                        
                         <div class="content">
                             <div class="status-card">
-                                <h2 style="margin-top: 0;">${statusIcon} ${currentBuild.currentResult == 'SUCCESS' ? 'SUCCESS' : 'FAILURE'}</h2>
+                                <h2>${statusIcon} ${currentBuild.currentResult == 'SUCCESS' ? 'DEPLOYMENT SUCCESSFUL' : 'DEPLOYMENT FAILED'}</h2>
                                 <p>Pipeline: ${env.JOB_NAME}</p>
                                 <p>Build #${env.BUILD_NUMBER}</p>
                             </div>
@@ -214,6 +244,14 @@ pipeline {
                                 <a href="${env.BUILD_URL}" class="button">View Build Details</a>
                             </center>
                         </div>
+                        
+                        <div class="footer">
+                            ${currentBuild.currentResult == 'SUCCESS' ? 
+                            'All systems operational' : 
+                            'Please check the build logs for details'}
+                            <br>
+                            <small>Generated at ${new Date().format("yyyy-MM-dd HH:mm:ss z")}</small>
+                        </div>
                     </div>
                 </body>
                 </html>
@@ -223,7 +261,7 @@ pipeline {
                 emailext (
                     subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: emailContent,
-                    to: '2200030963@kluniversity.in',
+                    to: ${EMAIL_RECIPIENTS},
                     mimeType: 'text/html'
                 )
             }
