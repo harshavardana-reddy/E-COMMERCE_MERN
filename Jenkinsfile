@@ -5,18 +5,18 @@ pipeline {
         NODE_VERSION = '18'
         DOCKER_HUB_CREDENTIALS = credentials('Jenkins-Docker')
         
-        BACKEND_IMAGE_NAME = 'harshareddy2024/ecom-backend'
-        FRONTEND_IMAGE_NAME = 'harshareddy2024/ecom-frontend'
+        BACKEND_IMAGE_NAME = 'bhavya31088/ecom-backend'
+        FRONTEND_IMAGE_NAME = 'bhavya31088/ecom-frontend'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         
-        JWT_SECRET_KEY = credentials('JWT_SECRET_KEY_ECOM')
+        JWT_SECRET_KEY = credentials('JWT_SECRET_KEY')
         DB_URI_ATLAS = credentials('DB_URI_ATLAS_ECOM')
         RAZORPAY_KEY_ID = credentials('RAZORPAY_KEY_ID')
         RAZORPAY_KEY_SECRET = credentials('RAZORPAY_KEY_SECRET')
         
         VITE_APP_RAZORPAY_KEY = credentials('VITE_APP_RAZORPAY_KEY')
 
-        EMAIL_RECIPIENTS = "harshapattiputtoor@gmail.com,2200030963@kluniversity.in,pattiputtoor20050320@gmail.com"
+        EMAIL_RECIPIENTS = "bhavyaaleti9@gmail.com,2200031088cseh@gmail.com,2200031088@kluniversity.in"
     }
 
     stages {
