@@ -5,8 +5,8 @@ pipeline {
         NODE_VERSION = '18'
         DOCKER_HUB_CREDENTIALS = credentials('Jenkins-Docker')
         
-        BACKEND_IMAGE_NAME = 'bhavya152/ecom-backend'
-        FRONTEND_IMAGE_NAME = 'bhavya152/ecom-frontend'
+        BACKEND_IMAGE_NAME = 'bhavya31088/ecom-backend'
+        FRONTEND_IMAGE_NAME = 'bhavya31088/ecom-frontend'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         
         JWT_SECRET_KEY = credentials('JWT_SECRET_KEY')
