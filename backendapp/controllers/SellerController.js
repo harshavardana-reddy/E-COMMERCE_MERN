@@ -49,7 +49,7 @@ const addProduct = async(req,res)=>{
             productImage,
             productImageType
         });
-
+        console.log(newProduct);
         await newProduct.save();
 
         return res.status(201).json({
