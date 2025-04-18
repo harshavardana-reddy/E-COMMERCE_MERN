@@ -60,10 +60,10 @@ const addProduct = async(req,res)=>{
     
         });
     } catch (error) {
-        console.error('Error adding product:', error);
+        console.error('Error adding product: ', error);
         return res.status(500).json({
             success: false,
-            message: 'Internal server error'+error.message
+            message: 'Internal server error '+error.message
         });
     }
 }
