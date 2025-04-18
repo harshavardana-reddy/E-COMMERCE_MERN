@@ -49,7 +49,7 @@ const addProduct = async(req,res)=>{
             ...req.body,
             productImage,
             productImageType,
-            _id: new mongoose.Types.ObjectId().toString() // your custom ID if needed
+            _id: new mongoose.Types.ObjectId() // your custom ID if needed
         });
         // console.log(newProduct);
         await newProduct.save();
