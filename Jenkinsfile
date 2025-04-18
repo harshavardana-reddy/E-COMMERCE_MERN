@@ -257,12 +257,12 @@ pipeline {
                 """
 
                 // Send email notification
-                // emailext (
-                //     subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                //     body: emailContent,
-                //     to: "${EMAIL_RECIPIENTS}",
-                //     mimeType: 'text/html'
-                // )
+                emailext (
+                    subject: "[${currentBuild.currentResult}] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: emailContent,
+                    to: "${EMAIL_RECIPIENTS}",
+                    mimeType: 'text/html'
+                )
             }
             
             bat 'docker logout'
