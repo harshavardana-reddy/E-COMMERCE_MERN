@@ -41,7 +41,7 @@ const productSchema = new mongoose.Schema({
         ref:'Seller',
         required:true,
     }
-},{_id:false});
+});
 
 
 
