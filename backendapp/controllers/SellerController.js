@@ -3,7 +3,8 @@ const userModel = require('../models/User');
 const orderModel = require('../models/Order');
 const paymentModel = require('../models/Payment');
 const sellerModel = require('../models/Seller');
-const logisticModel = require('../models/Logistic')
+const logisticModel = require('../models/Logistic');
+const mongoose = require('mongoose');
 
 const imageMimeTypes = {
     png: 'image/png',
@@ -47,9 +48,10 @@ const addProduct = async(req,res)=>{
         const newProduct = new productModel({
             ...req.body,
             productImage,
-            productImageType
+            productImageType,
+            productId: new mongoose.Types.ObjectId().toString() // your custom ID if needed
         });
-        console.log(newProduct);
+        // console.log(newProduct);
         await newProduct.save();
 
         return res.status(201).json({
