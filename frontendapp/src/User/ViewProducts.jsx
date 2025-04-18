@@ -48,7 +48,7 @@ export default function ViewProduct() {
     try {
       const response = await userApi.get(`${BackendURL.User}/getproducts`);
       const products = response.data.data;
-      
+      // console.log(products);
       // Create a unique set of seller IDs
       const sellerIds = [...new Set(products.map(p => p.sellerId))];
       

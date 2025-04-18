@@ -2,6 +2,7 @@ const router = require('express').Router();
 const userController = require('../controllers/UserController');
 const {verifytoken , authorize} = require('../utils/jwt/Auth');
 
+router.get('/getproducts',[verifytoken,authorize("user"),userController.getProducts]);
 router.post('/buyNow/:id', [verifytoken,authorize("user"),userController.buyNow]);
 router.post('/verifyPayment', [verifytoken,authorize("user"),userController.verifyOrderPayment]);
 router.post('/buyfromcart/:id', [verifytoken,authorize("user"),userController.buyFromCart]);

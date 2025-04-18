@@ -11,6 +11,23 @@ const {
   verifySignature,
 } = require("../utils/razorpay/razorpay");
 
+const getProducts = async (req,res) => {
+    try {
+        const products = await productModel.find({},{__v:0,_id:0});
+        return res.status(200).json({
+            success: true,
+            message: 'Products fetched successfully',
+            data: products,
+        });
+    } catch (error) {
+        console.error('Error :', error.message);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error'+error.message
+        });
+    }
+}
+
 const getProduct = async (req, res) => {
   const productId = req.params.id;
   // console.log(productId)
@@ -1187,5 +1204,6 @@ module.exports = {
   getLogisticDetails,
   updateProfile,
   updatePassword,
-  getUserDashboardStats
+  getUserDashboardStats,
+  getProducts
 };
