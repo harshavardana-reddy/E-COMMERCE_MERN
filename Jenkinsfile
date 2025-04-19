@@ -16,7 +16,7 @@ pipeline {
         
         VITE_APP_RAZORPAY_KEY = credentials('VITE_APP_RAZORPAY_KEY')
 
-        EMAIL_RECIPIENTS = "harshapattiputtoor@gmail.com,2200030963@kluniversity.in,pattiputtoor20050320@gmail.com"
+        EMAIL_RECIPIENTS = "2200030963@kluniversity.in,2200030928@kluniversity.in,2200031106@kluniversity.in,2200031107@kluniversity.in,2200032891@kluniversity.in"
     }
 
     stages {
